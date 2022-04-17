@@ -31,11 +31,11 @@ public class KiraCatHax : Mod
         {
             Player.Get().AddItemToInventory("Leaf_Bandage");
             Player.Get().AddItemToInventory("Charcoal");
-            Player.Get().AddItemToInventory("indigo_blue_leptonia");
-            Player.Get().AddItemToInventory("Gerronema_viridilucens");
-            Player.Get().AddItemToInventory("Gerronema_retiarium");
-            Player.Get().AddItemToInventory("copa_hongo");
-            Player.Get().AddItemToInventory("marasmius_haematocephalus");
+            Player.Get().AddItemToInventory("indigo_blue_leptonia_dryed");
+            Player.Get().AddItemToInventory("Gerronema_viridilucens_dryed");
+            Player.Get().AddItemToInventory("Gerronema_retiarium_dryed");
+            Player.Get().AddItemToInventory("copa_hongo_dryed");
+            Player.Get().AddItemToInventory("marasmius_haematocephalus_Dryed");
         }
     }
 
@@ -45,13 +45,13 @@ public class KiraCatHax : Mod
         ItemsManager.Get().UnlockAllItemsInNotepad();
     }
 
-    [ConsoleCommand(name: "kira_unlockAllInfo", docs: "Gives names to things that are unknown and shows their properties before picking up")]
+    [ConsoleCommand(name: "kira_unlockPlantNames", docs: "Gives names to things that are unknown")]
     public static void UnlockAllInfo()
     {
         ItemsManager.Get().UnlockAllItemInfos();
     }
 
-    [ConsoleCommand(name: "kira_giveStarterKit", docs: "Gives you a bounch of stuff to help you get started")]
+    [ConsoleCommand(name: "kira_giveStarterKit", docs: "Gives you a bunch of stuff to help you get started")]
     public static void GiveStarterKit()
     {
         Player.Get().AddItemToInventory("Machete");
@@ -89,6 +89,7 @@ public class KiraCatHax : Mod
     [ConsoleCommand(name: "kira_giveItem", docs: "Gives you a specific item")]
     public static void GiveItem(string[] item)
     {
+
         Player.Get().AddItemToInventory(item[0]);
     }
 
@@ -96,6 +97,12 @@ public class KiraCatHax : Mod
     public static void SetCarryWeight(string[] weight)
     {
         InventoryBackpack.Get().m_MaxWeight = float.Parse(weight[0]);
+    }
+
+    [ConsoleCommand(name: "kira_emptyBackpack", docs: "Drops every item you're caryrying")]
+    public static void EmptyBackpack()
+    {
+        InventoryBackpack.Get().DropAllItems();
     }
 
     public void OnModUnload()

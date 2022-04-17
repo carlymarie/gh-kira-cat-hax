@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using System.Globalization;
 public class KiraCatHax : Mod
 {
     public void Start()
@@ -89,8 +89,12 @@ public class KiraCatHax : Mod
     [ConsoleCommand(name: "kira_giveItem", docs: "Gives you a specific item")]
     public static void GiveItem(string[] item)
     {
+        int quantity = item.Length == 1 ? 1: int.Parse(item[1]);
 
-        Player.Get().AddItemToInventory(item[0]);
+        for (int x = 0; x < quantity; x++)
+        {
+            Player.Get().AddItemToInventory(item[0]);
+        }
     }
 
     [ConsoleCommand(name: "kira_setCarryWeight", docs: "Change how much you weight you can carry")]
@@ -103,6 +107,27 @@ public class KiraCatHax : Mod
     public static void EmptyBackpack()
     {
         InventoryBackpack.Get().DropAllItems();
+    }
+
+    [ConsoleCommand(name: "kira_join", docs: "Teleport to player")]
+    public static void Join(string[] text)
+    {
+        int index = int.Parse(text[0]);
+        ReplicatedLogicalPlayer player = ReplicatedLogicalPlayer.s_AllLogicalPlayers[index];
+        Debug.Log("Teleporting to: " + player.GetP2PPeer().GetDisplayName());
+        Player.Get().Teleport(player.gameObject, false);
+    }
+
+    [ConsoleCommand(name: "kira_players", docs: "Used to get id of player for teleporting")]
+    public static void PlayerList()
+    {
+        int index = 0;
+        foreach(ReplicatedLogicalPlayer player in ReplicatedLogicalPlayer.s_AllLogicalPlayers)
+        {
+            string name = player.GetP2PPeer().GetDisplayName();
+            Debug.Log($"ID({index}): {name}");
+            index++;
+        }
     }
 
     public void OnModUnload()
